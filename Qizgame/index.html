@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="game.css">
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap" rel="stylesheet">
+</head>
+<body>
+    <section>
+        <h1>Math quiz game :))</h1>
+        <div class="centerdiv">
+            <div class="insertBox">
+                <div class="box1">
+                    <input type="text" id="v1">
+                </div>
+                <div class="box1">
+                    <input type="text" id="v3">
+                </div>
+                <div class="box1">
+                    <input type="text" id="v2">
+                </div>
+            </div>
+            <div class="middleBox">
+                <input type="text" id="answ">
+            </div>
+            
+            <div class="sentBox">
+                <button onclick="jsgame()">Check answer</button>
+            </div>
+        </div>
+        <audio src="DING.mp3" id="audi1"></audio>
+        <audio src="FAIL.mp3" id="audi2"></audio>
+    </section>
+</body>
+</html>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.1.1/howler.min.js"></script>
+<script>
+//    hàm lấy operator ngẫu nhiên 
+   function getRandomOperator() {
+    let operators = ["+", "-", "*"];
+    let ran = Math.floor(Math.random() * operators.length);
+    return operators[ran];
+    }
+
+
+    let n1=Math.floor(Math.random()*100+1);
+    let n2=Math.floor(Math.random()*100+1);
+    let operator = getRandomOperator();
+    let cal = n1 + " " + operator + " " + n2;
+    document.getElementById('v2').value=n2;
+    document.getElementById('v1').value=n1;
+    document.getElementById('v3').value=operator;
+
+console.log(cal);
+    function getResult() {
+        return eval(cal);
+    }
+    
+    var result=getResult();
+    console.log(result);
+    const jsgame=()=>{
+    var answer=document.getElementById('answ').value;
+    if(answer==result){
+        document.getElementById('audi1').play();
+            alert('Well done! Your answer is correct.');
+            location.reload();
+            
+        }
+        else{
+            document.getElementById('audi2').play();
+            alert(`Correct answer is ${result} .Try Again`); 
+            location.reload();
+        }
+    }
+</script>
