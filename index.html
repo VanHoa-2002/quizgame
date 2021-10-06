@@ -11,15 +11,20 @@
     <section>
         <h1>Math quiz game :))</h1>
         <div class="centerdiv">
+            <div class="box">
+                <p style="color: rgb(226, 115, 11);">Time &nbsp;&nbsp;&nbsp;Score</p>
+                <input type="text" id="time" disabled>
+                <input type="text" id="score" disabled>
+            </div>
             <div class="insertBox">
                 <div class="box1">
-                    <input type="text" id="v1">
+                    <input type="text" id="v1" disabled>
                 </div>
                 <div class="box1">
-                    <input type="text" id="v3">
+                    <input type="text" id="v3" disabled>
                 </div>
                 <div class="box1">
-                    <input type="text" id="v2">
+                    <input type="text" id="v2"disabled >
                 </div>
             </div>
             <div class="middleBox">
@@ -44,33 +49,65 @@
     return operators[ran];
     }
 
-
-    let n1=Math.floor(Math.random()*100+1);
-    let n2=Math.floor(Math.random()*100+1);
+    let n1=Math.floor(Math.random()*10+1);
+    let n2=Math.floor(Math.random()*10+1);
     let operator = getRandomOperator();
+function toan(){
     let cal = n1 + " " + operator + " " + n2;
+    return cal;
+}
+
     document.getElementById('v2').value=n2;
     document.getElementById('v1').value=n1;
     document.getElementById('v3').value=operator;
-
-console.log(cal);
+var result=0;
+// console.log(toan());
     function getResult() {
-        return eval(cal);
+        var result=eval(toan());
+        return result;
     }
-    
-    var result=getResult();
-    console.log(result);
-    const jsgame=()=>{
-    var answer=document.getElementById('answ').value;
-    if(answer==result){
-        document.getElementById('audi1').play();
-            alert('Well done! Your answer is correct.');
+    var count=11;
+    var counter=setInterval(time, 1000); 
+    function time()
+    {
+        count=count-1;
+        if (count <= -1)
+    {
+        document.getElementById('audi2').play();
+            alert(`Your score is ${score} point, correct answer is ${getResult()} .Try Again`); 
+            clearInterval(counter);
             location.reload();
-            
+        return;
+    }
+ document.getElementById("time").value=count; // watch for spelling
+}   
+    let score=0;
+    // console.log(getResult());
+
+    const jsgame=()=>{
+        var answer=document.getElementById('answ').value;
+    if(answer==getResult()){
+        score+=10;
+        document.getElementById("score").value = score;
+        document.getElementById('audi1').play();  
+        alert('Well done! Your answer is correct.');
+        clearInterval(counter);
+        time();   
+        answer=document.getElementById('answ').value="";
+        n1=Math.floor(Math.random()*10+1);
+        n2=Math.floor(Math.random()*10+1);
+        operator = getRandomOperator();
+        count=11;
+        counter=setInterval(time, 1000);
+        toan();
+        document.getElementById('v2').value=n2;
+        document.getElementById('v1').value=n1;
+        document.getElementById('v3').value=operator;  
+        console.log(getResult()); 
         }
         else{
             document.getElementById('audi2').play();
-            alert(`Correct answer is ${result} .Try Again`); 
+            alert(`Your score is ${score} point, correct answer is ${getResult()}.Try Again`); 
             location.reload();
         }
     }
